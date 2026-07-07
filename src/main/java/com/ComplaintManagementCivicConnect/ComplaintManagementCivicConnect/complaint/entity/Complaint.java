@@ -1,6 +1,7 @@
 package com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.entity;
 
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.common.BaseEntity;
+import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dto.ComplaintStatusHistory;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.enums.ComplaintCategory;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.enums.ComplaintPriority;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.enums.ComplaintStatus;
@@ -44,6 +45,12 @@ public class Complaint extends BaseEntity {
     @Column(nullable = false)
     private ComplaintPriority priority;
 
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean emergency = false;
+
+
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
@@ -66,6 +73,32 @@ public class Complaint extends BaseEntity {
     )
     @Builder.Default
     private List<ComplaintImage> images = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "complaint",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY)
+    @Builder.Default
+    @OrderBy("changedAt ASC")
+    private List<ComplaintStatusHistory> statusHistory =
+            new ArrayList<>();
+
+
+
+
+
+    //ai-data
+    private String aiRawCategory;
+    private Double aiConfidence;
+    private Boolean aiValidate;
+
+    // ── Location Intelligence ─────────────────────────────────────
+    private String emergencyReason;
+
+    @Column(columnDefinition = "TEXT")
+    private String nearbyPlacesJson;
+
 
     public void addImage(ComplaintImage image){
 

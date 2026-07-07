@@ -3,6 +3,7 @@ package com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.comp
 public enum ComplaintStatus {
 
     PENDING_REVIEW,
+    APPROVED,
     ASSIGNED,
     IN_PROGRESS,
     COMPLETED,

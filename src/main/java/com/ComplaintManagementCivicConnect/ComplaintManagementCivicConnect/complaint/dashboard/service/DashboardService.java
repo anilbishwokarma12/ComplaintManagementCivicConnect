@@ -4,7 +4,7 @@ import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.compl
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.dto.DashboardResponse;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.dto.MonthlyStatDto;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.dto.RecentComplaintDto;
-import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.repository.ComplaintRepository;
+import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.repository.DashboardComplaintRepository;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.enums.ComplaintStatus;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.user.entity.User;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.user.entity.UserPrinciple;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DashboardService {
 
-    private final ComplaintRepository complaintRepository;
+    private final DashboardComplaintRepository dashboardComplaintRepository;
 
     private final UserService userService;
 
@@ -31,12 +31,12 @@ public DashboardResponse getDashboard(UserPrinciple userPrinciple){
 
    ComplaintCountsDto counts = buildCounts(userId);
 
-  List<RecentComplaintDto> recent =  complaintRepository.findTop5ByUserIdOrderByCreatedAtDesc(userId);
+  List<RecentComplaintDto> recent =  dashboardComplaintRepository.findTop5ByUserIdOrderByCreatedAtDesc(userId);
 
     LocalDateTime sixMonthsAgo = LocalDateTime.now().minusMonths(6);
 
     // FIXED: Handle Object[] returned from repository
-    List<Object[]> monthlyStatsRaw = complaintRepository.findMonthlyStats(userId, sixMonthsAgo);
+    List<Object[]> monthlyStatsRaw = dashboardComplaintRepository.findMonthlyStats(userId, sixMonthsAgo);
     List<MonthlyStatDto> monthly = monthlyStatsRaw.stream()
             .map(row -> MonthlyStatDto.builder()
                     .year(((Number) row[0]).intValue())
@@ -56,11 +56,11 @@ public DashboardResponse getDashboard(UserPrinciple userPrinciple){
     private ComplaintCountsDto buildCounts(UUID userId){
 
     return  ComplaintCountsDto.builder()
-            .total(complaintRepository.countByUserId(userId))
-            .pending(complaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.PENDING_REVIEW))
-            .inProgress(complaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.IN_PROGRESS))
-            .completed(complaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.COMPLETED))
-            .rejected(complaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.REJECTED))
+            .total(dashboardComplaintRepository.countByUserId(userId))
+            .pending(dashboardComplaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.PENDING_REVIEW))
+            .inProgress(dashboardComplaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.IN_PROGRESS))
+            .completed(dashboardComplaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.COMPLETED))
+            .rejected(dashboardComplaintRepository.countByUserIdAndStatus(userId, ComplaintStatus.REJECTED))
             .build();
 
     }

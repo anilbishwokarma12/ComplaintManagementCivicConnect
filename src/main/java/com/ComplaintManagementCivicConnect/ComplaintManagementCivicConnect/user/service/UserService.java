@@ -177,6 +177,12 @@ public class UserService {
 
     }
 
+    public User findByEmailOrThrow(String email) {
+
+        return userRepository.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
+    }
 
     //---validate Image--------
     private void validateImage(MultipartFile file){

@@ -4,6 +4,7 @@ import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.commo
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.common.exception.ResourceNotFoundException;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.email.EmailServices;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.user.dto.*;
+import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.user.entity.Role;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.user.entity.User;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.user.entity.UserPrinciple;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.user.repository.UserRepository;
@@ -49,7 +50,7 @@ public class AuthServices {
                 .email(request.getEmail().toLowerCase())
                 .password(passwordEncoder.encode(request.getPassword()))
                .address(request.getAddress())
-                .role(request.getRole())
+                .role(Role.CITIZEN)
                 .phoneNumber(request.getPhoneNumber())
                 .enabled(false)
                 .isActive(false)

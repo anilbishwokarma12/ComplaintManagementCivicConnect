@@ -1,6 +1,5 @@
 package com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.repository;
 
-import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.dto.MonthlyStatDto;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.dashboard.dto.RecentComplaintDto;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.entity.Complaint;
 import com.ComplaintManagementCivicConnect.ComplaintManagementCivicConnect.complaint.enums.ComplaintStatus;
@@ -14,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface ComplaintRepository extends JpaRepository<Complaint, UUID> {
+public interface DashboardComplaintRepository extends JpaRepository<Complaint, UUID> {
 
     long countByUserId(UUID userID);
     long countByUserIdAndStatus(UUID userId, ComplaintStatus status);

@@ -32,5 +32,5 @@ public class RegisterRequest {
 
     private String address;
 
-    private Role role = Role.CITIZEN;
+
 }
