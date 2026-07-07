@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class JwtUtil {
 
-    @Value("${jwt.secret}")
+    @Value("${JWT_SECRET}")
     private String secreteKey;
 
     @Value("${jwt.expiration}")
